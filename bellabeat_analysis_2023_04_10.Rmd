@@ -9,22 +9,55 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+### Business Task
+Analyze Fitbit user trends to find opportunities for Bellabeat's growth by influencing Bellabeat's marketing strategies.
+<br> 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Data Preparaion
+In this phase, data is downloaded, imported, and prepped to be analyzed.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+<br> 
 
-```{r cars}
-summary(cars)
+#### Downloading Data
+We will be using Fitbit users' data on Kaggle, as requested by Bellabeat. This data set tracked 30 users' daily, hourly, and minute activities / heart rate / steps.
+<br> 
+
+
+#### Loading Packages
+```{r}
+install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+library(tidyverse)
+```
+<br>
+
+### Data Processing / Exploration
+```{r}
+activity <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv")
+calories <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyCalories_merged.csv")
+intensities <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyIntensities_merged.csv")
+sleep <- read.csv("Fitabase Data 4.12.16-5.12.16/sleepDay_merged.csv")
+
+
+head(activity)
+head(calories)
+head(intensities)
+head(sleep)
+
+str(activity)
+str(calories)
+str(intensities)
+str(sleep)
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## Data Analysis
+```{r}
+n_distinct(activity$Id)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Data Visualization
+
