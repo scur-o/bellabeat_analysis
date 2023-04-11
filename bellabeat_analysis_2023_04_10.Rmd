@@ -55,7 +55,25 @@ str(sleep)
 ## Data Analysis
 ```{r}
 n_distinct(activity$Id)
+n_distinct(calories$Id)
+n_distinct(intensities$Id)
+n_distinct(sleep$Id)
 ```
+With the 'n_distinct' function, we are able to identify that there are 33 participants in daily activities, calories, and intensities, while sleep has 24. Since the discrepancies between 33 and 24 is not too large, we will continue using these data sets for our analysis.
+
+```{r}
+activity %>% 
+  select(VeryActiveMinutes, FairlyActiveMinutes, LightlyActiveMinutes, SedentaryMinutes, Calories) %>% 
+  summary()
+```
+Looking at the daily activity's averages(mean) in this summary, we can see that the Sedentary Minutes(991 minutes) is almost 5x the combined minutes from Very Active, Fairly Active, and Lightly Active(combined sum: 228 minutes). This massive difference may give us a clue that most fitbit users are inactive. Looking into the Sleep minutes may give us a better clue as to how much of those Sedentary Minutes are spent asleep. 
+
+```{r}
+sleep %>% 
+  select(TotalMinutesAsleep, TotalTimeInBed) %>% 
+  summary()
+```
+
 
 
 

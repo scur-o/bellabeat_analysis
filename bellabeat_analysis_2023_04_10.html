@@ -381,7 +381,7 @@ activities / heart rate / steps. <br></p>
 <pre><code>## package &#39;tidyverse&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\ossca\AppData\Local\Temp\Rtmpwj2v7o\downloaded_packages</code></pre>
+##  C:\Users\ossca\AppData\Local\Temp\Rtmpi6UeY1\downloaded_packages</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.1     ✔ readr     2.1.4
@@ -524,6 +524,50 @@ head(activity)</code></pre>
 <h2>Data Analysis</h2>
 <pre class="r"><code>n_distinct(activity$Id)</code></pre>
 <pre><code>## [1] 33</code></pre>
+<pre class="r"><code>n_distinct(calories$Id)</code></pre>
+<pre><code>## [1] 33</code></pre>
+<pre class="r"><code>n_distinct(intensities$Id)</code></pre>
+<pre><code>## [1] 33</code></pre>
+<pre class="r"><code>n_distinct(sleep$Id)</code></pre>
+<pre><code>## [1] 24</code></pre>
+<p>With the ‘n_distinct’ function, we are able to identify that there
+are 33 participants in daily activities, calories, and intensities,
+while sleep has 24. Since the discrepancies between 33 and 24 is not too
+large, we will continue using these data sets for our analysis.</p>
+<pre class="r"><code>activity %&gt;% 
+  select(VeryActiveMinutes, FairlyActiveMinutes, LightlyActiveMinutes, SedentaryMinutes, Calories) %&gt;% 
+  summary()</code></pre>
+<pre><code>##  VeryActiveMinutes FairlyActiveMinutes LightlyActiveMinutes SedentaryMinutes
+##  Min.   :  0.00    Min.   :  0.00      Min.   :  0.0        Min.   :   0.0  
+##  1st Qu.:  0.00    1st Qu.:  0.00      1st Qu.:127.0        1st Qu.: 729.8  
+##  Median :  4.00    Median :  6.00      Median :199.0        Median :1057.5  
+##  Mean   : 21.16    Mean   : 13.56      Mean   :192.8        Mean   : 991.2  
+##  3rd Qu.: 32.00    3rd Qu.: 19.00      3rd Qu.:264.0        3rd Qu.:1229.5  
+##  Max.   :210.00    Max.   :143.00      Max.   :518.0        Max.   :1440.0  
+##     Calories   
+##  Min.   :   0  
+##  1st Qu.:1828  
+##  Median :2134  
+##  Mean   :2304  
+##  3rd Qu.:2793  
+##  Max.   :4900</code></pre>
+<p>Looking at the daily activity’s averages(mean) in this summary, we
+can see that the Sedentary Minutes(991 minutes) is almost 5x the
+combined minutes from Very Active, Fairly Active, and Lightly
+Active(combined sum: 228 minutes). This massive difference may give us a
+clue that most fitbit users are inactive. Looking into the Sleep minutes
+may give us a better clue as to how much of those Sedentary Minutes are
+spent asleep.</p>
+<pre class="r"><code>sleep %&gt;% 
+  select(TotalMinutesAsleep, TotalTimeInBed) %&gt;% 
+  summary()</code></pre>
+<pre><code>##  TotalMinutesAsleep TotalTimeInBed 
+##  Min.   : 58.0      Min.   : 61.0  
+##  1st Qu.:361.0      1st Qu.:403.0  
+##  Median :433.0      Median :463.0  
+##  Mean   :419.5      Mean   :458.6  
+##  3rd Qu.:490.0      3rd Qu.:526.0  
+##  Max.   :796.0      Max.   :961.0</code></pre>
 </div>
 <div id="data-visualization" class="section level2">
 <h2>Data Visualization</h2>
