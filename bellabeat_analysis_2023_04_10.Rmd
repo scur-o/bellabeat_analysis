@@ -2,7 +2,9 @@
 title: "Bellabeat Analysis"
 author: "Oscar"
 date: "2023-04-10"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -66,16 +68,31 @@ activity %>%
   select(VeryActiveMinutes, FairlyActiveMinutes, LightlyActiveMinutes, SedentaryMinutes, Calories) %>% 
   summary()
 ```
-Looking at the daily activity's averages(mean) in this summary, we can see that the Sedentary Minutes(991 minutes) is almost 5x the combined minutes from Very Active, Fairly Active, and Lightly Active(combined sum: 228 minutes). This massive difference may give us a clue that most fitbit users are inactive. Looking into the Sleep minutes may give us a better clue as to how much of those Sedentary Minutes are spent asleep. 
+Looking at the daily activity's averages(mean) in this summary, we can see that the Sedentary Minutes(991 minutes or 16.5 hours) is more than 4x the combined minutes from Very Active, Fairly Active, and Lightly Active(combined sum: 228 minutes or 4 hours). This massive difference may give us a clue that most Fitbit users are inactive. Looking into the Sleep Minutes may give us a better clue as to how much of those Sedentary Minutes are spent asleep. 
 
 ```{r}
 sleep %>% 
   select(TotalMinutesAsleep, TotalTimeInBed) %>% 
   summary()
 ```
+It looks like users spend a little under half their inactivity in bed. Which still leaves 532 minutes or about 9 hours inactive outside of bed. With this 9 hour inactivity remainder, we can conclude that users may be busily inactive during their full time job, or their routine is full of inactivity.
 
-
-
+<br>
 
 ## Data Visualization
+```{r}
+selectActivity <- activity %>% 
+  select(VeryActiveMinutes, FairlyActiveMinutes, LightlyActiveMinutes, SedentaryMinutes)
+
+activityPlot <- colMeans(selectActivity)
+
+hours <- round(activityPlot / 60, digits = 1)
+lbls <- paste(names(activityPlot), hours, "hours")
+
+pie(activityPlot, col = c("#00e4ff", "#15b5cd", "#1a879c", "#185d6d"), labels = lbls)
+```
+
+
+
+## Conlusions & Reccommendations 
 
