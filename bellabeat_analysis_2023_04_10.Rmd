@@ -36,7 +36,7 @@ library(tidyverse)
 ```{r}
 activity <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv")
 calories <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyCalories_merged.csv")
-intensities <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyIntensities_merged.csv")
+intensities <- read.csv("Fitabase Data 4.12.16-5.12.16/hourlyIntensities_merged.csv")
 sleep <- read.csv("Fitabase Data 4.12.16-5.12.16/sleepDay_merged.csv")
 
 
@@ -52,9 +52,21 @@ str(sleep)
 
 ```
 
+#### Data Manipulation: Cleaning and aggregating to find the average hourly intensity of users
 
+Since the original format was in a string format, I had to convert the string to datetime in order to extract the HMS by reconverting to HMS in string format
+```{r}
+intensities$ActivityHour <- mdy_hms(intensities$ActivityHour)
+intensities$ActivityHour = format(intensities$ActivityHour, "%H:%M:%S")
+
+
+class(intensities$ActivityHour)
+```
+<br>
 
 ## Data Analysis
+
+
 ```{r}
 n_distinct(activity$Id)
 n_distinct(calories$Id)
@@ -77,6 +89,17 @@ sleep %>%
 ```
 It looks like users spend a little under half their inactivity in bed. Which still leaves 532 minutes or about 9 hours inactive outside of bed. With this 9 hour inactivity remainder, we can conclude that users may be busily inactive during their full time job, or their routine is full of inactivity.
 
+We can get a better understanding of users' routine by looking at their average hourly intensity. From this table we can see that users are mostly active after 5 PM.
+
+```{r}
+avgIntensities <- intensities %>% 
+  group_by(ActivityHour) %>% 
+  summarize(TotalAvgIntensity = mean(TotalIntensity))
+
+intensities %>% 
+  group_by(ActivityHour) %>% 
+  summarize(TotalAvgIntensity = mean(TotalIntensity))
+```
 <br>
 
 ## Data Visualization
@@ -89,7 +112,21 @@ activityPlot <- colMeans(selectActivity)
 hours <- round(activityPlot / 60, digits = 1)
 lbls <- paste(names(activityPlot), hours, "hours")
 
-pie(activityPlot, col = c("#00e4ff", "#15b5cd", "#1a879c", "#185d6d"), labels = lbls)
+pie(activityPlot, col = c("#ffa600", "#ed5562", "#8d4280", "#1e345c"), labels = lbls)
+```
+
+Here we can see the massive coverage of Sedentary Minutes compared to all the other active states combined. From the plot, the Sedentary minutes take up approximately 16.5 hours or 81% of the total average activity. 
+
+To get a clearer understanding, we can see when users are mostly inactive.
+Here we can see the difference of intensities after 5PM from users. 
+
+```{r}
+ggplot(avgIntensities, aes(x=ActivityHour, y=TotalAvgIntensity)) +
+  geom_bar(stat = "identity", aes(fill=TotalAvgIntensity)) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Average Hourly Intensity",
+       x = "Hour",
+       y = "Total Average Intensity")
 ```
 
 
