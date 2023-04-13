@@ -129,7 +129,24 @@ ggplot(avgIntensities, aes(x=ActivityHour, y=TotalAvgIntensity)) +
        y = "Total Average Intensity")
 ```
 
-
+<br>
 
 ## Conlusions & Reccommendations 
+In conclusion, we can see that the average user spend most of their time in the Sedentary state. The data also shows us that the average user has a routine in which their most active period is after 5 PM and before 8 PM. With this knowledge I can make a few recommendations to help Bellabeat's marketing department.
+
+Bellabeat can
+
+
+* send users motivational messages based on their most active time of day to further push them to be active. 
+
+* send sleep reminders based on their time of inactivity at night
+
+* award users who have completed workouts to motivate them to continue being active
+
+* set a program for users to interact and challenge their friends
+
+
+
+
+
 
