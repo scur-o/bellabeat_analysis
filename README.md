@@ -1,4 +1,4 @@
-# bellabeat_analysis
+# Bellabeat Analysis
 
 ### Business Task
 In this project, I am tasked to analyze Fitabase database and find user trends in order to make accurate predictions and recommendations for Bellabeat's marketing team.
