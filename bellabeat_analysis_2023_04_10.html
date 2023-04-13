@@ -381,7 +381,7 @@ activities / heart rate / steps. <br></p>
 <pre><code>## package &#39;tidyverse&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\ossca\AppData\Local\Temp\Rtmp6beiRi\downloaded_packages</code></pre>
+##  C:\Users\ossca\AppData\Local\Temp\RtmpCo8Nf3\downloaded_packages</code></pre>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.1     ✔ readr     2.1.4
@@ -398,6 +398,9 @@ activities / heart rate / steps. <br></p>
 </div>
 <div id="data-processing-exploration" class="section level3">
 <h3>Data Processing / Exploration</h3>
+<p>We will be processing the daily data for the users’ activity,
+calories burned, and sleep. The intensities will be processed by the
+hour so we can see when users are most active.</p>
 <pre class="r"><code>activity &lt;- read.csv(&quot;Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv&quot;)
 calories &lt;- read.csv(&quot;Fitabase Data 4.12.16-5.12.16/dailyCalories_merged.csv&quot;)
 intensities &lt;- read.csv(&quot;Fitabase Data 4.12.16-5.12.16/hourlyIntensities_merged.csv&quot;)
@@ -504,7 +507,8 @@ head(activity)</code></pre>
 hourly intensity of users</h4>
 <p>Since the original format was in a string format, I had to convert
 the string to datetime in order to extract the HMS by reconverting to
-HMS in string format</p>
+HMS in string format in order to aggregate and find the average
+intensity for all users.</p>
 <pre class="r"><code>intensities$ActivityHour &lt;- mdy_hms(intensities$ActivityHour)
 intensities$ActivityHour = format(intensities$ActivityHour, &quot;%H:%M:%S&quot;)
 

@@ -33,6 +33,7 @@ library(tidyverse)
 <br>
 
 ### Data Processing / Exploration
+We will be processing the daily data for the users' activity, calories burned, and sleep. The intensities will be processed by the hour so we can see when users are most active.
 ```{r}
 activity <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv")
 calories <- read.csv("Fitabase Data 4.12.16-5.12.16/dailyCalories_merged.csv")
@@ -54,7 +55,7 @@ str(sleep)
 
 #### Data Manipulation: Cleaning and aggregating to find the average hourly intensity of users
 
-Since the original format was in a string format, I had to convert the string to datetime in order to extract the HMS by reconverting to HMS in string format
+Since the original format was in a string format, I had to convert the string to datetime in order to extract the HMS by reconverting to HMS in string format in order to aggregate and find the average intensity for all users.
 ```{r}
 intensities$ActivityHour <- mdy_hms(intensities$ActivityHour)
 intensities$ActivityHour = format(intensities$ActivityHour, "%H:%M:%S")
